@@ -21,26 +21,39 @@ def send_welcome(message):
     bt5 = types.KeyboardButton('Osh')
     bt6 = types.KeyboardButton('Batken')
     bt7 = types.KeyboardButton('Jalal-Abad')
-    markup.add(bt1, bt2, bt3, bt4, bt5, bt6, bt7)
+    other = types.KeyboardButton('Other')
+    markup.add(bt1, bt2, bt3, bt4, bt5, bt6, bt7, other)
     bot.send_message(message.chat.id, 'Hello!\nChoose the one variant of them', reply_markup=markup)
 
 
 @bot.message_handler(content_types=['text'])
 def reply_mess(message):
     if message.text == 'Bishkek':
-        bot.send_message(message.chat.id, BishkekWeather())
+        bot.send_message(message.chat.id, get_weather(message_text=message.text))
     if message.text == 'Talas':
-        bot.send_message(message.chat.id, TalasWeather())
+        bot.send_message(message.chat.id, get_weather(message_text=message.text))
     if message.text == 'Issyk-Kul':
-        bot.send_message(message.chat.id, IKWeather())
+        bot.send_message(message.chat.id, get_weather(message_text=message.text))
     if message.text == 'Naryn':
-        bot.send_message(message.chat.id, NarynWeather())
+        bot.send_message(message.chat.id, get_weather(message_text=message.text))
     if message.text == 'Osh':
-        bot.send_message(message.chat.id, OshWeather())
+        bot.send_message(message.chat.id, get_weather(message_text=message.text))
     if message.text == 'Batken':
-        bot.send_message(message.chat.id, BatkenWeather())
+        bot.send_message(message.chat.id, get_weather(message_text=message.text))
     if message.text == 'Jalal-Abad':
-        bot.send_message(message.chat.id, JalalAbadWeather())
+        bot.send_message(message.chat.id, get_weather(message_text=message.text))
+    if message.text == 'Other':
+        bot.send_message(message.chat.id, 'Ok, tell me, wich city do you want?\nWithout mistake please!')
+    else:
+        try:
+            bot.send_message(message.chat.id, get_weather(message_text=message.text))
+        except:
+            bot.send_message(message.chat.id, "Such city doesn't found with us\nOr retype please correctly")
+        else:
+            bot.send_message(message.chat.id, "We found this city!")
+
+
+
     
     
 
