@@ -1,14 +1,11 @@
 import telebot 
 from telebot import types
-import requests
-from bs4 import BeautifulSoup
-import fake_useragent
 from parse import *
+from config import TOKEN, load_config
 
+token = load_config(TOKEN, "token", default="notoken")
 
-TOKEN = '1653612500:AAE-EPc2EVFkD47xS-hjh4dU1gxFdB8wdcA'
-
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot(token)
 
 
 @bot.message_handler(commands=['start'])
@@ -28,71 +25,7 @@ def send_welcome(message):
 
 @bot.message_handler(content_types=['text'])
 def reply_mess(message):
-    if message.text == 'Bishkek':
-        bot.send_message(message.chat.id, get_weather(message_text=message.text))
-    if message.text == 'Talas':
-        bot.send_message(message.chat.id, get_weather(message_text=message.text))
-    if message.text == 'Issyk-Kul':
-        bot.send_message(message.chat.id, get_weather(message_text=message.text))
-    if message.text == 'Naryn':
-        bot.send_message(message.chat.id, get_weather(message_text=message.text))
-    if message.text == 'Osh':
-        bot.send_message(message.chat.id, get_weather(message_text=message.text))
-    if message.text == 'Batken':
-        bot.send_message(message.chat.id, get_weather(message_text=message.text))
-    if message.text == 'Jalal-Abad':
-        bot.send_message(message.chat.id, get_weather(message_text=message.text))
-    if message.text == 'Other':
-        bot.send_message(message.chat.id, 'Ok, tell me, wich city do you want?\nWithout mistake please!')
-    else:
-        try:
-            bot.send_message(message.chat.id, get_weather(message_text=message.text))
-        except:
-            bot.send_message(message.chat.id, "Such city doesn't found with us\nOr retype please correctly")
-        else:
-            bot.send_message(message.chat.id, "We found this city!")
-
-
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    choice_city(message, bot)
 
 
 bot.polling()
